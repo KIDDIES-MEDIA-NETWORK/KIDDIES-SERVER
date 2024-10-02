@@ -8,6 +8,9 @@ app.use(express.json()); // For parsing JSON request bodies
 
 let ffmpegProcess = null;
 
+// Serve the 'streams' directory as static files
+app.use('/streams', express.static(path.join(__dirname, 'streams')));
+
 // Route to start live streaming
 app.post('/start-stream', (req, res) => {
   const { streamKey, route } = req.body;
@@ -16,7 +19,7 @@ app.post('/start-stream', (req, res) => {
     return res.status(400).send({ message: "Stream key and RTMP URL are required." });
   }
 
-  const outputDirectory = path.join(__dirname, './streams/index.m3u8');
+  const outputDirectory = path.join(__dirname, 'streams/index.m3u8');
 
   const ffmpegCommand = [
     '-i', `rtmp://fms-03-01.5centscdn.com/${route}/${streamKey}`,
@@ -40,7 +43,7 @@ app.post('/start-stream', (req, res) => {
   }
 
   ffmpegProcess = spawn('ffmpeg', ffmpegCommand);
-  console.log(ffmpegCommand, 'command code')
+  console.log(ffmpegCommand, 'command code');
 
   ffmpegProcess.stdout.on('data', (data) => {
     console.log(`FFmpeg stdout: ${data}`);
@@ -70,6 +73,6 @@ app.post('/stop-stream', (req, res) => {
 });
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, (res) => {
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
