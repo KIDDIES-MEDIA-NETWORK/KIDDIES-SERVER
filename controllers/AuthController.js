@@ -49,9 +49,12 @@ exports.registerUser = async (req, res) => {
 // User Login
 exports.loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { identifier, password } = req.body; // Change 'email' to 'identifier' as it can be email or username
 
-    const user = await User.findOne({ email });
+    // Check if the identifier is an email or username
+    const user = await User.findOne({
+      $or: [{ email: identifier }, { username: identifier }]
+    });
 
     if (!user) {
       return res.status(400).json({ success: false, message: 'Invalid credentials' });
@@ -70,6 +73,7 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 // Forgot Password
 exports.forgotPassword = async (req, res) => {
