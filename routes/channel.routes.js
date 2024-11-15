@@ -1,5 +1,5 @@
 const express = require('express');
-const { addChannel, getChannelBySlug, updateStreamLink, getHeartCount, incrementHeartCount } = require('../controllers/ChannelController');
+const { addChannel, getChannelBySlug, updateStreamLink, getHeartCount, incrementHeartCount, getChannelViewers } = require('../controllers/ChannelController');
 // const { sendHeart, } = require('../controllers/HeartController');
 
 const router = express.Router();
@@ -16,5 +16,5 @@ router.put('/:slug/stream-link', updateStreamLink);
 // router.post('/send', sendHeart);
 router.put('/:slug/heart', incrementHeartCount);
 router.get('/:slug/heart', getHeartCount);
-
+router.get('/:slug/viewers', getChannelViewers);
 module.exports = router;

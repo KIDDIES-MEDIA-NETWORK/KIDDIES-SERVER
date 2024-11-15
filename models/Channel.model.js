@@ -6,6 +6,7 @@ const ChannelSchema = new mongoose.Schema({
   streamLink: { type: String, required: true },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   heartCount: { type: Number, default: 0 },
+  viewers: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model('Channel', ChannelSchema);

@@ -102,3 +102,17 @@ exports.updateStreamLink = async (req, res) => {
     }
   };
   
+  exports.getChannelViewers = async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const channel = await Channel.findOne({ slug: slug });
+  
+      if (!channel) {
+        return res.status(404).json({ message: 'Channel not found' });
+      }
+  
+      res.status(200).json({ viewers: channel.viewers });
+    } catch (error) {
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };

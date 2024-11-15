@@ -9,6 +9,7 @@ const userRoutes = require('./routes/user.routes');
 const commentRoutes = require('./routes/comment.routes');
 const heartRoutes = require('./routes/heart.routes');
 const channelRoutes = require('./routes/channel.routes');
+const handleSocketEvents = require('./controllers/ViewerController');
 
 dotenv.config();
 connectDB();
@@ -55,6 +56,8 @@ app.use('/channels', channelRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('hearts', heartRoutes);
+
+handleSocketEvents(io)
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // Use server.listen instead of app.listen
