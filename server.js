@@ -54,7 +54,7 @@ app.use('/api/auth', authRoutes);
 app.use('/channels', channelRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/comments', commentRoutes);
-app.use('/api/hearts', heartRoutes);
+app.use('hearts', heartRoutes);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // Use server.listen instead of app.listen

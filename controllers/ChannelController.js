@@ -61,3 +61,44 @@ exports.updateStreamLink = async (req, res) => {
     }
   };
   
+
+  exports.incrementHeartCount = async (req, res) => {
+    try {
+      const { slug } = req.params;
+      console.log(slug);
+      
+      const channel = await Channel.findOneAndUpdate(
+        { slug }, // Use slug here instead of _id
+        { $inc: { heartCount: 1 } },
+        { new: true }
+      );
+  
+      if (!channel) {
+        return res.status(404).json({ message: 'Channel not found' });
+      }
+  
+      res.status(200).json({ success: true, heartCount: channel.heartCount });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
+  
+
+  exports.getHeartCount = async (req, res) => {
+    try {
+      const { slug } = req.params;
+  
+      // Use findOne to query by the `slug` field
+      const channel = await Channel.findOne({ slug: slug });
+      if (!channel) {
+        return res.status(404).json({ message: 'Channel not found' });
+      }
+  
+      res.status(200).json({ success: true, heartCount: channel.heartCount });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
+  
