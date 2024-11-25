@@ -35,7 +35,7 @@ exports.registerUser = async (req, res) => {
       // Send the verification code to the user's email
       await sendEmail({
         email: user.email,
-        subject: 'Confirmation Code',
+        subject: `Confirmation Code - ${verificationCode}`,
         message: `Your email confirmation code is: ${verificationCode}`
       });
   
@@ -66,7 +66,7 @@ exports.loginUser = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     res.status(200).json({ success: true, token });
   } catch (error) {

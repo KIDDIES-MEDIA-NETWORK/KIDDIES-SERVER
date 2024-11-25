@@ -11,7 +11,7 @@ const sendEmail = async (options) => {
   });
 
   const mailOptions = {
-    from: 'LOVELWORLD KIDDIES',
+    from: 'LOVEWORLD KIDDIES',
     to: options.email,
     subject: options.subject,
     text: options.message
